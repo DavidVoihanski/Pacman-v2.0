@@ -25,9 +25,12 @@ public class ImagePanel extends JPanel {
 	private BufferedImage originalImage;
 	private BufferedImage packman;
 	private BufferedImage fruit;
+	private BufferedImage ghost;
 	private final static String PathToMapImage = "images/Ariel1.png";
 	private final static String PathToPackImage = "images/pacman.png";
 	private final static String PathToFruitImage = "images/fruit.png";
+	private final static String PathToGhostImage = "images/ghost.png";
+
 	/**
 	 * basic constructor
 	 * 
@@ -35,13 +38,13 @@ public class ImagePanel extends JPanel {
 	 */
 	ImagePanel() {
 		try {
-			this.changingImage = ImageIO.read(new File(PathToMapImage));
+			this.originalImage = ImageIO.read(new File(PathToMapImage));
 		} catch (IOException e1) {
 			System.out.println("ERR=>reading map image");
 			e1.printStackTrace();
 		}
 		try {
-			this.originalImage = ImageIO.read(new File(PathToMapImage));
+			this.changingImage = ImageIO.read(new File(PathToMapImage));
 		} catch (IOException e1) {
 			System.out.println("ERR=>reading map image");
 			e1.printStackTrace();
@@ -60,6 +63,13 @@ public class ImagePanel extends JPanel {
 			e.printStackTrace();
 		}
 		fruit = this.resizeIcon(30, 30, fruit);
+		try {
+			this.ghost = ImageIO.read(new File(PathToGhostImage));
+		} catch (IOException e) {
+			System.out.println("CANT READ THE GHOST ICON");
+			e.printStackTrace();
+		}
+		ghost = this.resizeIcon(30, 30, ghost);
 
 	}
 
@@ -91,6 +101,9 @@ public class ImagePanel extends JPanel {
 		g.drawImage(this.packman, x, y, null);
 	}
 
+	public void drawGhost(int x, int y, Graphics g) {
+		g.drawImage(this.ghost, x, y, null);
+	}
 	/**
 	 * draw the fruit icon on the screen
 	 * 
@@ -119,10 +132,7 @@ public class ImagePanel extends JPanel {
 		this.changingImage = bilinearScaleOp.filter(this.originalImage,
 				new BufferedImage(width, height, this.originalImage.getType()));
 	}
-	/////
-	public Component getMapImage() {
-		return (new JPanel(this.changingImage));
-	}
+
 	/****** private methods *********/
 
 	// resizing an icon, used to change icons size in GUI
@@ -135,6 +145,5 @@ public class ImagePanel extends JPanel {
 		AffineTransformOp bilinearScaleOp = new AffineTransformOp(scaleTransform, AffineTransformOp.TYPE_BILINEAR);
 		return bilinearScaleOp.filter(icon, new BufferedImage(width, height, icon.getType()));
 	}
-
 
 }

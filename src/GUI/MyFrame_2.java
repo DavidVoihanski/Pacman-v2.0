@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -15,7 +16,7 @@ import javax.swing.JMenuItem;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
-public class MyFrame_2  extends JFrame implements MouseListener, ComponentListener, MenuListener, ActionListener {
+public class MyFrame_2 extends JFrame implements MouseListener, ComponentListener, MenuListener, ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JMenu mainMenu;
@@ -25,38 +26,8 @@ public class MyFrame_2  extends JFrame implements MouseListener, ComponentListen
 
 	public MyFrame_2() {
 		initComp();
-	}
-
-	private void initComp() {
-		menuCreator();
-		windowSetter();
-
-	}
-	
-	private void windowSetter() {
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.images = new ImagePanel();
-		this.getContentPane().add(images);
-		this.pack();
-		this.setVisible(true);
-	}
-
-	private void menuCreator() {
-		JMenuBar menuBar = new JMenuBar();
-		// menu first - external "button:
-		this.mainMenu = new JMenu("Menu");
-		mainMenu.setMnemonic(KeyEvent.VK_R);
-		mainMenu.addMenuListener(this);
-		this.loadGame = new JMenuItem("load game from CSV");
-		loadGame.setMnemonic(KeyEvent.VK_R);
-		// loadGame.addActionListener(new MenuAction(this));
-		this.playGame = new JMenuItem("start playing");
-		this.playGame.setMnemonic(KeyEvent.VK_R);
-		// playGame.addActionListener(new MenuAction(this));
-		this.mainMenu.add(loadGame);
-		this.mainMenu.add(playGame);
-		menuBar.add(mainMenu);
-		this.setJMenuBar(menuBar);
+		this.addMouseListener(this);
+		this.addComponentListener(this);
 	}
 
 	@Override
@@ -85,8 +56,15 @@ public class MyFrame_2  extends JFrame implements MouseListener, ComponentListen
 
 	@Override
 	public void componentResized(ComponentEvent e) {
-		// TODO Auto-generated method stub
-
+		// resize the actual image
+		this.images.resizeImage(this.getWidth()- 22, this.getHeight()-79);
+		// make the thread "go to sleep" to avoid smearing the screen
+		try {
+			Thread.sleep(20);
+		} catch (InterruptedException e0) {
+			// TODO Auto-generated catch block
+			e0.printStackTrace();
+		}
 	}
 
 	@Override
@@ -136,4 +114,38 @@ public class MyFrame_2  extends JFrame implements MouseListener, ComponentListen
 		// TODO Auto-generated method stub
 
 	}
+	// *****************private:
+
+	private void initComp() {
+		menuCreator();
+		windowSetter();
+
+	}
+
+	private void windowSetter() {
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.images = new ImagePanel();
+		this.getContentPane().add(images);
+		this.setSize(this.images.getPreferredSize());;
+		this.setVisible(true);
+	}
+
+	private void menuCreator() {
+		JMenuBar menuBar = new JMenuBar();
+		// menu first - external "button:
+		this.mainMenu = new JMenu("Menu");
+		mainMenu.setMnemonic(KeyEvent.VK_R);
+		mainMenu.addMenuListener(this);
+		this.loadGame = new JMenuItem("load game from CSV");
+		loadGame.setMnemonic(KeyEvent.VK_R);
+		 loadGame.addActionListener(new MenuAction(this));
+		this.playGame = new JMenuItem("start playing");
+		this.playGame.setMnemonic(KeyEvent.VK_R);
+		playGame.addActionListener(new MenuAction(this));
+		this.mainMenu.add(loadGame);
+		this.mainMenu.add(playGame);
+		menuBar.add(mainMenu);
+		this.setJMenuBar(menuBar);
+	}
+
 }

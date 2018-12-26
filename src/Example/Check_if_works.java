@@ -1,7 +1,11 @@
 package Example;
 
 import java.util.ArrayList;
+
+import Algo.StringToGame;
+import Robot.Game;
 import Robot.Play;
+import Utils.Positionts;
 /**
  * This is the basic example of how to work with the Ex4 "server" like system:
  * 1. Create a "play" with one of the 9 attached files 

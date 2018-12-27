@@ -4,16 +4,13 @@ import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.InvalidPropertiesFormatException;
+
 
 import javax.swing.JFileChooser;
 
 import Algo.StringToGame;
 import Robot.Play;
 import Utils.Positionts;
-
 
 /**
  * this class was created to deal with "menu action" , i.e pressing the menu
@@ -25,9 +22,8 @@ import Utils.Positionts;
 class MenuAction implements ActionListener {
 	private MyFrame_2 guiInstance;
 	private JFileChooser fc;
+	private boolean isGameLoaded = false;
 	private Play play1;
-
-	
 
 	/**
 	 * basic constructor - only gets the GUI instance it was called from
@@ -41,7 +37,9 @@ class MenuAction implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		this.isGameLoaded = false;
 		if (e.getActionCommand().equals("load game from CSV")) {
+			this.isGameLoaded = true;
 			int returnValue = fc.showOpenDialog(null);
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				File selectedFile = fc.getSelectedFile();
@@ -53,8 +51,17 @@ class MenuAction implements ActionListener {
 			StringToGame.drawGame(pos, guiInstance);
 			// ******************************************//
 		} else if (e.getActionCommand().equals("start playing")) {
+			this.isGameLoaded = false;
 
 			// ******************************************//
 		}
+	}
+
+	public boolean getIsLoaded() {
+		return this.isGameLoaded;
+	}
+
+	public void setIsLoaded(boolean toSet) {
+		this.isGameLoaded = toSet;
 	}
 }

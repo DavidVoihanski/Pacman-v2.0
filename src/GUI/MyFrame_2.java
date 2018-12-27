@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -9,7 +8,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -18,9 +16,8 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
 import Algo.StringToGame;
-import Coords.LatLonAlt;
+
 import Utils.Positionts;
-import Utils.Range;
 
 public class MyFrame_2 extends JFrame implements MouseListener, ComponentListener, MenuListener, ActionListener {
 
@@ -30,6 +27,7 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 	private JMenuItem playGame;
 	private ImagePanel images;
 	private Positionts game;
+	private MenuAction menu;
 
 	public MyFrame_2() {
 		initComp();
@@ -116,9 +114,10 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("pixel value of point clicked: " + (e.getX() - 7) + " ," + (e.getY() - 51));
-//		LatLonAlt g = new LatLonAlt (32.104940,35.208304,0);
-//		System.out.println("TEST : "+Range.gps2Pixel(g, this.getWindowHeight(),this.getWindowWidth()));
+		if (this.menu.getIsLoaded()) {
+			this.images.drawMPlayer(e.getX(), e.getY(), this.getGraphics());
+			this.menu.setIsLoaded(false);
+		}
 	}
 
 	@Override
@@ -165,14 +164,15 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 		JMenuBar menuBar = new JMenuBar();
 		// menu first - external "button:
 		this.mainMenu = new JMenu("Menu");
+		this.menu = new MenuAction(this);
 		mainMenu.setMnemonic(KeyEvent.VK_R);
 		mainMenu.addMenuListener(this);
 		this.loadGame = new JMenuItem("load game from CSV");
 		loadGame.setMnemonic(KeyEvent.VK_R);
-		loadGame.addActionListener(new MenuAction(this));
+		loadGame.addActionListener(this.menu);
 		this.playGame = new JMenuItem("start playing");
 		this.playGame.setMnemonic(KeyEvent.VK_R);
-		playGame.addActionListener(new MenuAction(this));
+		playGame.addActionListener(this.menu);
 		this.mainMenu.add(loadGame);
 		this.mainMenu.add(playGame);
 		menuBar.add(mainMenu);

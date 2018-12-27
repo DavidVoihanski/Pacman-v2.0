@@ -12,7 +12,7 @@ public class Positionts {
 	private ArrayList<Ghost>ghostCollection;
 	private ArrayList<Rectangle>ractCollection;
 	private ArrayList<Fruit>fruitCollection;
-	private Player player;
+	private MyPlayer player;
 	public Positionts() {
 		this.packCollection=new ArrayList<>();
 		this.fruitCollection=new ArrayList<>();
@@ -44,10 +44,10 @@ public class Positionts {
 	public void setFruitCollection(ArrayList<Fruit> fruitCollection) {
 		this.fruitCollection = fruitCollection;
 	}
-	public Player getPlayer() {
+	public MyPlayer getPlayer() {
 		return player;
 	}
-	public void setPlayer(Player player) {
+	public void setPlayer(MyPlayer player) {
 		this.player = player;
 	}
 	public void addPackman(Packman p) {

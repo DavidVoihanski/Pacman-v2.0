@@ -8,8 +8,6 @@ import GUI.MyFrame_2;
 import Geom.Point3D;
 import Robot.Fruit;
 import Robot.Packman;
-import Server.Robot_user;
-import Server.Server_Robot;
 import Utils.Ghost;
 import Utils.Positionts;
 import Utils.Range;

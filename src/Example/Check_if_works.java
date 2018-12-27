@@ -2,13 +2,10 @@ package Example;
 
 import java.util.ArrayList;
 
-import Algo.StringToGame;
 
-import Geom.Point3D;
-import Robot.Game;
+
+
 import Robot.Play;
-import Utils.Positionts;
-import Utils.Range;
 
 /**
  * This is the basic example of how to work with the Ex4 "server" like system:
@@ -73,7 +70,7 @@ public class Check_if_works {
 		// 9) print the data & save to the course DB
 		String info = play1.getStatistics();
 		System.out.println(info);
-		Positionts pos = StringToGame.toGame(play1.getBoard());
-		Point3D p = Range.gps2Pixel(pos.getFruitCollection().get(0).getLocation(), 642, 1433);
+//		Positionts pos = StringToGame.toGame(play1.getBoard());
+//		Point3D p = Range.gps2Pixel(pos.getFruitCollection().get(0).getLocation(), 642, 1433);
 	}
 }

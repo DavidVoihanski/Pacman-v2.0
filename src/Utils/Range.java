@@ -5,7 +5,8 @@ import Geom.Point3D;
 import Utils.MyCoords;
 
 public abstract class Range {
-	private final double ratio = 0.6596583225494952;
+	// David->>> do you really need this variable ? you dont use it
+	// private final double ratio = 0.6596583225494952;
 	private final static double mapH = 422.6079031174025;
 	private final static double mapW = 945.2295422334731;
 	private final static Point3D topLeftP = new Point3D(32.10574, 35.20228, 0.0);

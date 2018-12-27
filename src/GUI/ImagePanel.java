@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.geom.AffineTransform;
@@ -11,7 +10,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 /**
  * this class represents the JPanel component we use to hold our image with
@@ -27,10 +25,12 @@ public class ImagePanel extends JLabel {
 	private BufferedImage packman;
 	private BufferedImage fruit;
 	private BufferedImage ghost;
+	private BufferedImage myPlayer;
 	private final static String PathToMapImage = "images/Ariel1.png";
 	private final static String PathToPackImage = "images/pacman.png";
 	private final static String PathToFruitImage = "images/fruit.png";
 	private final static String PathToGhostImage = "images/ghost.png";
+	private final static String PathToMyPlayer = "images/MyPlayer.png";
 
 	/**
 	 * basic constructor
@@ -71,7 +71,13 @@ public class ImagePanel extends JLabel {
 			e.printStackTrace();
 		}
 		ghost = this.resizeIcon(20, 20, ghost);
-
+		try {
+			this.myPlayer = ImageIO.read(new File(PathToMyPlayer));
+		} catch (IOException e1) {
+			System.out.println("ERR=>reading myPlayer image");
+			e1.printStackTrace();
+		}
+		myPlayer = this.resizeIcon(20, 20, myPlayer);
 	}
 
 	/****** public methods *********/
@@ -105,7 +111,10 @@ public class ImagePanel extends JLabel {
 	public void drawGhost(int x, int y, Graphics g) {
 		g.drawImage(this.ghost, x, y, null);
 	}
-
+	
+	public void drawMPlayer(int x, int y, Graphics g) {
+		g.drawImage(this.myPlayer, x, y, null);
+	}
 	public void drawBlock(int x, int y, int width, int height, Graphics g) {
 		g.fillRect(x, y, width, height);
 	}

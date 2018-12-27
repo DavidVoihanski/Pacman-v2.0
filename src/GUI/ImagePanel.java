@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -18,7 +19,7 @@ import javax.swing.JPanel;
  * @author Evgeny & David
  *
  */
-public class ImagePanel extends JPanel {
+public class ImagePanel extends JLabel {
 
 	private static final long serialVersionUID = 1L;
 	private BufferedImage changingImage;
@@ -55,21 +56,21 @@ public class ImagePanel extends JPanel {
 			System.out.println("CANT READ THE PACMAN ICON");
 			e.printStackTrace();
 		}
-		packman = this.resizeIcon(30, 30, packman);
+		packman = this.resizeIcon(20, 20, packman);
 		try {
 			this.fruit = ImageIO.read(new File(PathToFruitImage));
 		} catch (IOException e) {
 			System.out.println("CANT READ THE FRUIT ICON");
 			e.printStackTrace();
 		}
-		fruit = this.resizeIcon(30, 30, fruit);
+		fruit = this.resizeIcon(20, 20, fruit);
 		try {
 			this.ghost = ImageIO.read(new File(PathToGhostImage));
 		} catch (IOException e) {
 			System.out.println("CANT READ THE GHOST ICON");
 			e.printStackTrace();
 		}
-		ghost = this.resizeIcon(30, 30, ghost);
+		ghost = this.resizeIcon(20, 20, ghost);
 
 	}
 
@@ -97,13 +98,18 @@ public class ImagePanel extends JPanel {
 	 * @param y y pixel location value
 	 * @param g graphics instance from GUI
 	 */
-	public void drawingPackman(int x, int y, Graphics g) {
+	public void drawPackman(int x, int y, Graphics g) {
 		g.drawImage(this.packman, x, y, null);
 	}
 
 	public void drawGhost(int x, int y, Graphics g) {
 		g.drawImage(this.ghost, x, y, null);
 	}
+
+	public void drawBlock(int x, int y, int width, int height, Graphics g) {
+		g.fillRect(x, y, width, height);
+	}
+
 	/**
 	 * draw the fruit icon on the screen
 	 * 
@@ -111,7 +117,7 @@ public class ImagePanel extends JPanel {
 	 * @param y y pixel location value
 	 * @param g graphics instance from GUI
 	 */
-	public void drawingFruit(int x, int y, Graphics g) {
+	public void drawFruit(int x, int y, Graphics g) {
 		g.drawImage(this.fruit, x, y, null);
 	}
 

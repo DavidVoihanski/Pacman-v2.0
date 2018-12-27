@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -16,6 +17,11 @@ import javax.swing.JMenuItem;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
+import Algo.StringToGame;
+import Coords.LatLonAlt;
+import Utils.Positionts;
+import Utils.Range;
+
 public class MyFrame_2 extends JFrame implements MouseListener, ComponentListener, MenuListener, ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -23,11 +29,33 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 	private JMenuItem loadGame;
 	private JMenuItem playGame;
 	private ImagePanel images;
+	private Positionts game;
 
 	public MyFrame_2() {
 		initComp();
 		this.addMouseListener(this);
 		this.addComponentListener(this);
+	}
+
+	public double getWindowWidth() {
+		return (this.getWidth() - 20);
+	}
+
+	public double getWindowHeight() {
+		return (this.getHeight() - 70);
+	}
+
+	public ImagePanel getImagePanel() {
+		return this.images;
+	}
+
+	public void setGame(Positionts p) {
+		this.game = p;
+	}
+
+	public void clear() {
+		this.game = null;
+		this.paint(this.getGraphics());
 	}
 
 	@Override
@@ -57,7 +85,7 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 	@Override
 	public void componentResized(ComponentEvent e) {
 		// resize the actual image
-		this.images.resizeImage(this.getWidth()- 22, this.getHeight()-79);
+		this.images.resizeImage(this.getWidth() - 15, this.getHeight() - 60);
 		// make the thread "go to sleep" to avoid smearing the screen
 		try {
 			Thread.sleep(20);
@@ -65,6 +93,7 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 			// TODO Auto-generated catch block
 			e0.printStackTrace();
 		}
+		drawAll();
 	}
 
 	@Override
@@ -87,8 +116,9 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		System.out.println("pixel value of point clicked: " + (e.getX() - 7) + " ," + (e.getY() - 51));
+//		LatLonAlt g = new LatLonAlt (32.104940,35.208304,0);
+//		System.out.println("TEST : "+Range.gps2Pixel(g, this.getWindowHeight(),this.getWindowWidth()));
 	}
 
 	@Override
@@ -124,9 +154,10 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 
 	private void windowSetter() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.images = new ImagePanel();
-		this.getContentPane().add(images);
-		this.setSize(this.images.getPreferredSize());;
+		this.add(this.images);
+		this.pack();
 		this.setVisible(true);
 	}
 
@@ -138,7 +169,7 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 		mainMenu.addMenuListener(this);
 		this.loadGame = new JMenuItem("load game from CSV");
 		loadGame.setMnemonic(KeyEvent.VK_R);
-		 loadGame.addActionListener(new MenuAction(this));
+		loadGame.addActionListener(new MenuAction(this));
 		this.playGame = new JMenuItem("start playing");
 		this.playGame.setMnemonic(KeyEvent.VK_R);
 		playGame.addActionListener(new MenuAction(this));
@@ -148,4 +179,9 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 		this.setJMenuBar(menuBar);
 	}
 
+	private void drawAll() {
+		if (this.game != null) {
+			StringToGame.drawGame(this.game, this);
+		}
+	}
 }

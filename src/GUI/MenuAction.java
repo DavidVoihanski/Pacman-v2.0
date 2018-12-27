@@ -10,10 +10,10 @@ import java.util.InvalidPropertiesFormatException;
 
 import javax.swing.JFileChooser;
 
+import Algo.StringToGame;
 import Robot.Play;
-import algorithm.ShortestPathAlgo;
-import gameUtils.Game;
-import gameUtils.Paired;
+import Utils.Positionts;
+
 
 /**
  * this class was created to deal with "menu action" , i.e pressing the menu
@@ -45,14 +45,12 @@ class MenuAction implements ActionListener {
 			int returnValue = fc.showOpenDialog(null);
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				File selectedFile = fc.getSelectedFile();
+				this.guiInstance.clear();
 				play1 = new Play(selectedFile.toString());
 			}
-			ArrayList<String> board_data = play1.getBoard();
-			for(int i=0;i<board_data.size();i++) {
-				System.out.println(board_data.get(i));
-			}
-			String map_data = play1.getBoundingBox();
-			System.out.println("Bounding Box info: "+map_data);
+			Positionts pos = StringToGame.toGame(play1.getBoard());
+			guiInstance.setGame(pos);
+			StringToGame.drawGame(pos, guiInstance);
 			// ******************************************//
 		} else if (e.getActionCommand().equals("start playing")) {
 

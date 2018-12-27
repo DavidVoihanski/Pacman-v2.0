@@ -6,12 +6,12 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/ex4/Jars/mysql-connector-java-5.1.47.jar">
+	<classpathentry kind="lib" path="C:/Users/evgen/eclipse-workspace/Assignment4/Jars/Ex4_v02.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/ex4/Jars/Ex4_v02.jar">
+	<classpathentry kind="lib" path="C:/Users/evgen/eclipse-workspace/Assignment4/Jars/mysql-connector-java-5.1.47.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

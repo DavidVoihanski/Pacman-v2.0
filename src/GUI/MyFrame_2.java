@@ -62,6 +62,12 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 		this.paint(this.getGraphics());
 	}
 
+	public LatLonAlt getMyPlayerLoc() {
+		return this.p1.getPosition();
+	}
+	public boolean isMyPlayerSet() {
+		return (this.p1!=null);
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -129,7 +135,7 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 //			e1.printStackTrace();
 //		}
 		if (this.menu.IsAllowedToPutMyP()) {
-			Point3D pixelClicked = new Point3D (e.getX(),e.getY());
+			Point3D pixelClicked = new Point3D(e.getX(), e.getY());
 			LatLonAlt startingLocation = null;
 			try {
 				startingLocation = Range.pixel2Gps(pixelClicked, this.getWindowHeight(), this.getWindowWidth());
@@ -138,7 +144,8 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 				e1.printStackTrace();
 			}
 			this.p1 = new MyPlayer(startingLocation);
-			this.images.drawMPlayer(e.getX(), e.getY(), this.getGraphics());
+			this.menu.setMyPlayerLoc(startingLocation);
+			this.images.drawMPlayer(pixelClicked.ix(), pixelClicked.iy(), this.getGraphics());
 			this.menu.setIsLoaded(false);
 		}
 	}

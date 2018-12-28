@@ -5,10 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-
 import javax.swing.JFileChooser;
 
 import Algo.StringToGame;
+import Coords.LatLonAlt;
 import Robot.Play;
 import Utils.Positionts;
 
@@ -48,17 +48,21 @@ class MenuAction implements ActionListener {
 				this.guiInstance.clear();
 				play1 = new Play(selectedFile.toString());
 			}
-			play1.setIDs(firstID, secID);
-			play1.setInitLocation(32.1040, 35.2061);
 			Positionts pos = StringToGame.toGame(play1.getBoard());
+			play1.setIDs(firstID, secID);
 			guiInstance.setGame(pos);
 			StringToGame.drawGame(pos, guiInstance);
 			// ******************************************//
 		} else if (e.getActionCommand().equals("start playing")) {
 			this.isTryingToPutMyP = false;
-
+			this.play1.start();
+			
 			// ******************************************//
 		}
+	}
+
+	public void setMyPlayerLoc(LatLonAlt arg) {
+		this.play1.setInitLocation(arg.alt(), arg.lon());
 	}
 
 	public boolean IsAllowedToPutMyP() {

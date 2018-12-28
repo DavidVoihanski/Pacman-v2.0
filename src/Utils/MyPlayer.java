@@ -7,9 +7,9 @@ public class MyPlayer {
 	public MyPlayer(LatLonAlt pos) {
 		this.startPosition=pos;
 	}
-//	public LatLonAlt getPosition() {
-//		return position;
-//	}
+	public LatLonAlt getPosition() {
+		return position;
+	}
 //	public void setPosition(LatLonAlt position) {
 //		this.position = position;
 //	}

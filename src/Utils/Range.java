@@ -12,6 +12,8 @@ public abstract class Range {
 	private final static double mapH = 422.6079031174025;
 	private final static double mapW = 945.2295422334731;
 	private final static Point3D topLeftP = new Point3D(32.10574, 35.20228, 0.0);
+	private final static int originalPixelHeight=642;
+	private final static int originalPixelWidth=1433;
 	private static MyCoords converter = new MyCoords();
 
 	public static Point3D gps2Pixel(LatLonAlt gps, double dynHeight, double dynWidth) {
@@ -52,8 +54,8 @@ public abstract class Range {
 
 	private static Point3D calcDiffMeterVector(Point3D pixelClicked, double dynHeight, double dynWidth)
 			throws IOException {
-		double hRatio = dynHeight / mapH;// calculating height ratio of the resolution as for right now
-		double wRatio = dynWidth / mapW;// calculating width ratio of the resolution as for right now
+		double hRatio = dynHeight / originalPixelHeight;// calculating height ratio of the resolution as for right now
+		double wRatio = dynWidth / originalPixelWidth;// calculating width ratio of the resolution as for right now
 		Point3D vector = new Point3D((((-1) * (pixelClicked.y() - 57)) * (ratio / hRatio)),
 				((pixelClicked.x()) * (ratio / wRatio)), 0);// calculating the actual vector and returning it
 		return vector;

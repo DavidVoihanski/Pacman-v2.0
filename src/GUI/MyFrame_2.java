@@ -42,11 +42,11 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 	}
 
 	public double getWindowWidth() {
-		return (this.getWidth() - 20);
+		return (this.getWidth() -20);
 	}
 
 	public double getWindowHeight() {
-		return (this.getHeight() - 70);
+		return (this.getHeight()-70);
 	}
 
 	public ImagePanel getImagePanel() {
@@ -89,7 +89,7 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 	@Override
 	public void menuCanceled(MenuEvent e) {
 		// TODO Auto-generated method stub
-
+		this.geth
 	}
 
 	@Override
@@ -126,14 +126,23 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-//		Point3D pixelClicked = new Point3D (e.getX(),e.getY());
-//		System.out.println(pixelClicked);
+		Point3D pixelClicked_= new Point3D (e.getX(),e.getY());
+		System.out.println(pixelClicked_);
 //		try {
 //			System.out.println(Range.pixel2Gps(pixelClicked, this.getWindowHeight(), this.getWindowWidth()));
 //		} catch (IOException e1) {
 //			// TODO Auto-generated catch block
 //			e1.printStackTrace();
 //		}
+		try {
+			LatLonAlt gps=Range.pixel2Gps(pixelClicked_, this.getWindowHeight(),this.getWindowWidth());
+			System.out.println(gps);
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		
 		if (this.menu.IsAllowedToPutMyP()) {
 			Point3D pixelClicked = new Point3D(e.getX(), e.getY());
 			LatLonAlt startingLocation = null;

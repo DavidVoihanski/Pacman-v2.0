@@ -9,6 +9,7 @@ import Geom.Point3D;
 import Robot.Fruit;
 import Robot.Packman;
 import Utils.Ghost;
+import Utils.MyPlayer;
 import Utils.Positionts;
 import Utils.Range;
 import Utils.Rectangle;
@@ -17,11 +18,17 @@ public abstract class StringToGame {
 	public static Positionts toGame(ArrayList<String> data) {
 		Iterator<String> it = data.iterator();
 		Positionts pos = new Positionts();
-
 		while (it.hasNext()) {
 			String currLine = it.next();
 			String[] lineToArr = currLine.split(",");
-			if (lineToArr[0].equals("F")) {
+			if(lineToArr[0].equals("M")) {
+				double lat = Double.parseDouble(lineToArr[2]);
+				double lon = Double.parseDouble(lineToArr[3]);
+				LatLonAlt location = new LatLonAlt(lat, lon, 0);
+				MyPlayer newPlayer = new MyPlayer(location);
+				pos.setPlayer(newPlayer);
+			}
+			else if (lineToArr[0].equals("F")) {
 				double lat = Double.parseDouble(lineToArr[2]);
 				double lon = Double.parseDouble(lineToArr[3]);
 				LatLonAlt location = new LatLonAlt(lat, lon, 0);
@@ -54,10 +61,19 @@ public abstract class StringToGame {
 		drawAllPackman(givenGame, givenGuiWidow);
 		drawAllFruit(givenGame, givenGuiWidow);
 		drawAllGhosts(givenGame, givenGuiWidow);
-
+		drawMyPlayerMovement(givenGame, givenGuiWidow);
 	}
 
 /////******************PRIVATE********************************
+	private static void drawMyPlayerMovement(Positionts givenGame, MyFrame_2 givenGuiWidow) {
+		MyPlayer p = givenGame.getPlayer();
+		if (p != null) {
+			Point3D pixelCoords = Range.gps2Pixel(p.getPosition(), givenGuiWidow.getWindowHeight(),
+					givenGuiWidow.getWindowWidth());
+			givenGuiWidow.getImagePanel().drawMPlayer(pixelCoords.ix() + 10, pixelCoords.iy() + 57,
+					givenGuiWidow.getGraphics());
+		}
+	}
 
 	private static void drawAllBlocks(Positionts givenGame, MyFrame_2 givenGuiWidow) {
 		Iterator<Rectangle> itRec = givenGame.getRactCollection().iterator();

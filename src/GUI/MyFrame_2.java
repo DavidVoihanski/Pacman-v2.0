@@ -7,6 +7,7 @@ import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -16,8 +17,10 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
 import Algo.StringToGame;
-
+import Geom.Point3D;
+import Utils.MyPlayer;
 import Utils.Positionts;
+import Utils.Range;
 
 public class MyFrame_2 extends JFrame implements MouseListener, ComponentListener, MenuListener, ActionListener {
 
@@ -114,7 +117,15 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (this.menu.getIsLoaded()) {
+		Point3D pixelClicked = new Point3D (e.getX(),e.getY());
+		System.out.println(pixelClicked);
+		try {
+			System.out.println(Range.pixel2Gps(pixelClicked, this.getWindowHeight(), this.getWindowWidth()));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		if (this.menu.IsAllowedToPutMyP()) {
 			this.images.drawMPlayer(e.getX(), e.getY(), this.getGraphics());
 			this.menu.setIsLoaded(false);
 		}

@@ -57,6 +57,8 @@ public abstract class StringToGame {
 
 	}
 
+/////******************PRIVATE********************************
+
 	private static void drawAllBlocks(Positionts givenGame, MyFrame_2 givenGuiWidow) {
 		Iterator<Rectangle> itRec = givenGame.getRactCollection().iterator();
 		while (itRec.hasNext()) {

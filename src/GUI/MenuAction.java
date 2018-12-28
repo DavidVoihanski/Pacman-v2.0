@@ -22,8 +22,10 @@ import Utils.Positionts;
 class MenuAction implements ActionListener {
 	private MyFrame_2 guiInstance;
 	private JFileChooser fc;
-	private boolean isGameLoaded = false;
+	private boolean isTryingToPutMyP = false;
 	private Play play1;
+	private long firstID = 313962193L;
+	private long secID = 315873455L;
 
 	/**
 	 * basic constructor - only gets the GUI instance it was called from
@@ -37,31 +39,33 @@ class MenuAction implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.isGameLoaded = false;
+		this.isTryingToPutMyP = false;
 		if (e.getActionCommand().equals("load game from CSV")) {
-			this.isGameLoaded = true;
+			this.isTryingToPutMyP = true;
 			int returnValue = fc.showOpenDialog(null);
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				File selectedFile = fc.getSelectedFile();
 				this.guiInstance.clear();
 				play1 = new Play(selectedFile.toString());
 			}
+			play1.setIDs(firstID, secID);
+			
 			Positionts pos = StringToGame.toGame(play1.getBoard());
 			guiInstance.setGame(pos);
 			StringToGame.drawGame(pos, guiInstance);
 			// ******************************************//
 		} else if (e.getActionCommand().equals("start playing")) {
-			this.isGameLoaded = false;
+			this.isTryingToPutMyP = false;
 
 			// ******************************************//
 		}
 	}
 
-	public boolean getIsLoaded() {
-		return this.isGameLoaded;
+	public boolean IsAllowedToPutMyP() {
+		return this.isTryingToPutMyP;
 	}
 
-	public void setIsLoaded(boolean toSet) {
-		this.isGameLoaded = toSet;
+	public void setIsLoaded(boolean arg) {
+		this.isTryingToPutMyP = arg;
 	}
 }

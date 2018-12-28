@@ -31,6 +31,7 @@ public class ImagePanel extends JLabel {
 	private final static String PathToFruitImage = "images/fruit.png";
 	private final static String PathToGhostImage = "images/ghost.png";
 	private final static String PathToMyPlayer = "images/MyPlayer.png";
+	
 
 	/**
 	 * basic constructor
@@ -77,7 +78,7 @@ public class ImagePanel extends JLabel {
 			System.out.println("ERR=>reading myPlayer image");
 			e1.printStackTrace();
 		}
-		myPlayer = this.resizeIcon(20, 20, myPlayer);
+		myPlayer = this.resizeIcon(35, 35, myPlayer);
 	}
 
 	/****** public methods *********/

@@ -57,9 +57,10 @@ public abstract class Range {
 		return mapW / dynWidth;// the division between maps width and the current guis width
 	}
 
-	private static Point3D calcDiffMeterVector(Point3D pixelClicked, double dynHeight, double dynWidth) {
-	double hRatio = dynHeight / originalPixelHeight;// calculating height ratio of the resolution as for right now
-	double wRatio = dynWidth / originalPixelWidth;// calculating width ratio of the resolution as for right now
+	private static Point3D calcDiffMeterVector(Point3D pixelClicked, double dynHeight, double dynWidth)
+			throws IOException {
+		double hRatio = dynHeight / originalPixelHeight;// calculating height ratio of the resolution as for right now
+		double wRatio = dynWidth / originalPixelWidth;// calculating width ratio of the resolution as for right now
 		Point3D vector = new Point3D((((-1) * (pixelClicked.y() - 57)) * (ratio / hRatio)),
 				((pixelClicked.x()) * (ratio / wRatio)), 0);// calculating the actual vector and returning it
 		return vector;

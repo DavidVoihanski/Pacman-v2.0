@@ -36,7 +36,6 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 	private MyPlayer p1;
 	private boolean isPlaying;
 	private boolean isSetToPlay;
-	
 
 	public MyFrame_2() {
 		initComp();
@@ -59,9 +58,9 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 	public void setGame(Positionts p) {
 		this.game = p;
 	}
-	
+
 	public void setIsSetToPlay(boolean arg) {
-		this.isSetToPlay=arg;
+		this.isSetToPlay = arg;
 	}
 
 	public void clear() {
@@ -80,7 +79,7 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 	public void setIsPlaying(boolean arg) {
 		this.isPlaying = arg;
 	}
-	
+
 	public MyPlayer getMPlayer() {
 		return this.p1;
 	}
@@ -106,7 +105,7 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 	@Override
 	public void menuCanceled(MenuEvent e) {
 		// TODO Auto-generated method stub
-
+		this.geth
 	}
 
 	@Override
@@ -157,7 +156,7 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 			this.images.drawMPlayer(pixelClicked.ix(), pixelClicked.iy(), this.getGraphics());
 			this.menu.setIsLoaded(false);
 			this.isPlaying = true;
-		} else if (this.isPlaying&&this.isMyPlayerSet()&&this.isSetToPlay) {
+		} else if (this.isPlaying && this.isMyPlayerSet() && this.isSetToPlay) {
 			this.menu.moveMyPlayer(pixelClicked);
 		}
 	}

@@ -105,7 +105,7 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 	@Override
 	public void menuCanceled(MenuEvent e) {
 		// TODO Auto-generated method stub
-		this.geth
+
 	}
 
 	@Override
@@ -142,8 +142,8 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		Point3D pixelClicked = new Point3D(e.getX(), e.getY());
 		if (this.menu.IsAllowedToPutMyP()) {
+			Point3D pixelClicked = new Point3D(e.getX(), e.getY());
 			LatLonAlt startingLocation = null;
 			try {
 				startingLocation = Range.pixel2Gps(pixelClicked, this.getWindowHeight(), this.getWindowWidth());
@@ -157,6 +157,7 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 			this.menu.setIsLoaded(false);
 			this.isPlaying = true;
 		} else if (this.isPlaying && this.isMyPlayerSet() && this.isSetToPlay) {
+			Point3D pixelClicked = new Point3D(e.getX(), e.getY());
 			this.menu.moveMyPlayer(pixelClicked);
 		}
 	}

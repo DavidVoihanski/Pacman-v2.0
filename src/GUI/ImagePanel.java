@@ -78,7 +78,7 @@ public class ImagePanel extends JLabel {
 			System.out.println("ERR=>reading myPlayer image");
 			e1.printStackTrace();
 		}
-		myPlayer = this.resizeIcon(35, 35, myPlayer);
+		myPlayer = this.resizeIcon(20, 20, myPlayer);
 	}
 
 	/****** public methods *********/

@@ -36,9 +36,7 @@ public class Rectangle {
 
 	public Point3D getWidthAndHeight(double guiH, double guiW) {
 		Point3D topRightPixel = Range.gps2Pixel(this.topRight, guiH, guiW);
-		System.out.println("topRightPixel: "+topRightPixel);
 		Point3D bottomleftPixel = Range.gps2Pixel(this.bottomLeft, guiH, guiW);
-		System.out.println("bottomleftPixel: "+bottomleftPixel);
 		Point3D output = new Point3D((topRightPixel.x()-bottomleftPixel.x()),(bottomleftPixel.y()-topRightPixel.y()));
 		return output;
 	}

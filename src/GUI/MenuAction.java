@@ -70,9 +70,7 @@ class MenuAction implements ActionListener {
 	}
 
 	public void setMyPlayerLoc(LatLonAlt arg) {
-		if (this.play1.setInitLocation(arg.lat(), arg.lon())) {
-			System.out.println("sss");
-		}
+		this.play1.setInitLocation(arg.lat(), arg.lon());
 		this.guiInstance.setIsSetToPlay(true);
 	}
 
@@ -85,6 +83,12 @@ class MenuAction implements ActionListener {
 	}
 
 	public void moveMyPlayer(Point3D lastPixelClicked) {
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		double angToMove = getAngForMovement(lastPixelClicked, this.guiInstance.getMyPlayerLoc());
 		this.play1.rotate(angToMove);
 		Positionts currentPos = StringToGame.toGame(this.play1.getBoard());

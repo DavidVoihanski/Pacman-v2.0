@@ -3,14 +3,14 @@ package Utils;
 import Coords.LatLonAlt;
 
 public class MyPlayer {
-	private LatLonAlt position;
+	private LatLonAlt startPosition;
 	public MyPlayer(LatLonAlt pos) {
-		this.position=pos;
+		this.startPosition=pos;
 	}
-	public LatLonAlt getPosition() {
-		return position;
-	}
-	public void setPosition(LatLonAlt position) {
-		this.position = position;
-	}
+//	public LatLonAlt getPosition() {
+//		return position;
+//	}
+//	public void setPosition(LatLonAlt position) {
+//		this.position = position;
+//	}
 }

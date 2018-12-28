@@ -2,7 +2,6 @@ package Utils;
 
 import java.io.IOException;
 
-
 import Coords.LatLonAlt;
 import Geom.Point3D;
 import Utils.MyCoords;
@@ -28,12 +27,14 @@ public abstract class Range {
 		return output;
 	}
 
-	public static GpsCoord pixel2Gps(Point3D pixelClicked, double dynHeight, double dynWidth) throws IOException {
+	public static LatLonAlt pixel2Gps(Point3D pixelClicked, double dynHeight, double dynWidth) throws IOException {
 		Point3D vectorMeter = calcDiffMeterVector(pixelClicked, dynHeight, dynWidth);// calculating the difference meter
 																						// vector and adding it to the
 																						// to
 		// left pixel after we normalize it by the ratio
-		return (new GpsCoord(converter.add(topLeftP, vectorMeter)));
+		GpsCoord afterAdded = new GpsCoord(converter.add(topLeftP, vectorMeter));
+		LatLonAlt output = new LatLonAlt(afterAdded.getLat(), afterAdded.getLon(), afterAdded.getAlt());
+		return output;
 	}
 
 /////******************PRIVATE********************************
@@ -49,10 +50,11 @@ public abstract class Range {
 		return mapW / dynWidth;// the division between maps width and the current guis width
 	}
 
-	private static Point3D calcDiffMeterVector(Point3D pixelClicked, double dynHeight, double dynWidth) throws IOException {
-		double hRatio = dynHeight/mapH;// calculating height ratio of the resolution as for right now
-		double wRatio = dynWidth/mapW;// calculating width ratio of the resolution as for right now
-		Point3D vector = new Point3D((((-1) * (pixelClicked.y()-57)) * (ratio / hRatio)),
+	private static Point3D calcDiffMeterVector(Point3D pixelClicked, double dynHeight, double dynWidth)
+			throws IOException {
+		double hRatio = dynHeight / mapH;// calculating height ratio of the resolution as for right now
+		double wRatio = dynWidth / mapW;// calculating width ratio of the resolution as for right now
+		Point3D vector = new Point3D((((-1) * (pixelClicked.y() - 57)) * (ratio / hRatio)),
 				((pixelClicked.x()) * (ratio / wRatio)), 0);// calculating the actual vector and returning it
 		return vector;
 	}

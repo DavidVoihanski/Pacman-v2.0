@@ -17,7 +17,9 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
 import Algo.StringToGame;
+import Coords.LatLonAlt;
 import Geom.Point3D;
+import Utils.GpsCoord;
 import Utils.MyPlayer;
 import Utils.Positionts;
 import Utils.Range;
@@ -31,6 +33,7 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 	private ImagePanel images;
 	private Positionts game;
 	private MenuAction menu;
+	private MyPlayer p1;
 
 	public MyFrame_2() {
 		initComp();
@@ -117,15 +120,24 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		Point3D pixelClicked = new Point3D (e.getX(),e.getY());
-		System.out.println(pixelClicked);
-		try {
-			System.out.println(Range.pixel2Gps(pixelClicked, this.getWindowHeight(), this.getWindowWidth()));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		Point3D pixelClicked = new Point3D (e.getX(),e.getY());
+//		System.out.println(pixelClicked);
+//		try {
+//			System.out.println(Range.pixel2Gps(pixelClicked, this.getWindowHeight(), this.getWindowWidth()));
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 		if (this.menu.IsAllowedToPutMyP()) {
+			Point3D pixelClicked = new Point3D (e.getX(),e.getY());
+			LatLonAlt startingLocation = null;
+			try {
+				startingLocation = Range.pixel2Gps(pixelClicked, this.getWindowHeight(), this.getWindowWidth());
+			} catch (IOException e1) {
+				System.out.println("ERR==>> placing MyPlayer for the first time");
+				e1.printStackTrace();
+			}
+			this.p1 = new MyPlayer(startingLocation);
 			this.images.drawMPlayer(e.getX(), e.getY(), this.getGraphics());
 			this.menu.setIsLoaded(false);
 		}

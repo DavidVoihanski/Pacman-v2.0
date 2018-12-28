@@ -49,7 +49,7 @@ class MenuAction implements ActionListener {
 				play1 = new Play(selectedFile.toString());
 			}
 			play1.setIDs(firstID, secID);
-			
+			play1.setInitLocation(32.1040, 35.2061);
 			Positionts pos = StringToGame.toGame(play1.getBoard());
 			guiInstance.setGame(pos);
 			StringToGame.drawGame(pos, guiInstance);

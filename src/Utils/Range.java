@@ -43,7 +43,23 @@ public abstract class Range {
 		double [] ansArray = converter.azimuth_elevation_dist(arg1, arg2);
 		return ansArray [0];
 	}
-
+	public static Point3D normVec(Point3D vector) {
+		double norm=Math.sqrt(Math.pow(vector.x(), 2)+Math.pow(vector.y(), 2)+Math.pow(vector.z(), 2));
+		Point3D normalized=new Point3D(vector);
+		normalized = multVec(1/norm,normalized);
+		return normalized;
+	}
+	/**
+	 * Mults this vector by x
+	 * @param x
+	 */
+	public static Point3D multVec(double x,Point3D vector) {
+		double x_=x*vector.x();
+		double y_=x*vector.y();
+		double z_=x*vector.z();
+		Point3D mutliplied=new Point3D(x_,y_,z_);
+		return mutliplied;
+	}
 /////******************PRIVATE********************************
 
 	private static double calcDymHRatio(double windowsHeight) {

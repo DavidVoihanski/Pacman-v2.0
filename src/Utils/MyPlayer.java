@@ -11,6 +11,6 @@ public class MyPlayer {
 		return startPosition;
 	}
 	public void setPosition(LatLonAlt position) {
-		this.position = position;
+		//this.position = position;
 	}
 }

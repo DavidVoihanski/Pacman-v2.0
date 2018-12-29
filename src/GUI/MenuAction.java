@@ -9,11 +9,15 @@ import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 
+import Algo.GameAlgo;
 import Algo.StringToGame;
 import Coords.LatLonAlt;
 import Geom.Point3D;
+import Robot.Fruit;
 import Robot.Play;
 import Utils.GpsCoord;
+import Utils.MyCoords;
+import Utils.MyPlayer;
 import Utils.Positionts;
 import Utils.Range;
 
@@ -83,17 +87,24 @@ class MenuAction implements ActionListener {
 	}
 
 	public void moveMyPlayer(Point3D lastPixelClicked) {
-		try {
-			Thread.sleep(10);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(play1.isRuning()) {
+			double angToMove;
+			Positionts currentPos = StringToGame.toGame(this.play1.getBoard());
+			Fruit closest=GameAlgo.findClosestFruit(currentPos.getFruitCollection(), currentPos.getPlayer());
+			double distance=closest.getLocation().distance2D(currentPos.getPlayer().getPosition())*100000;
+			System.out.println(distance);
+			if(distance>8) {
+				angToMove = getAngForMovement(lastPixelClicked, currentPos.getPlayer().getPosition());
+				this.play1.rotate(angToMove);
+			}
+			else {
+				angToMove=GameAlgo.pathToColsestFruit(currentPos.getPlayer(),closest);
+				this.play1.rotate(angToMove);
+			}
+			this.guiInstance.paint(this.guiInstance.getGraphics());
+			StringToGame.drawGame(currentPos, this.guiInstance);
+			System.out.println(play1.getStatistics());
 		}
-		double angToMove = getAngForMovement(lastPixelClicked, this.guiInstance.getMyPlayerLoc());
-		this.play1.rotate(angToMove);
-		Positionts currentPos = StringToGame.toGame(this.play1.getBoard());
-		this.guiInstance.paint(this.guiInstance.getGraphics());
-		StringToGame.drawGame(currentPos, this.guiInstance);
 	}
 
 	private double getAngForMovement(Point3D lastPixelClicked, LatLonAlt currentLoc) {

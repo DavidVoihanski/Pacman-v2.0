@@ -7,7 +7,7 @@ import Robot.Fruit;
 import Robot.Packman;
 
 public class Positionts {
-	private LatLonAlt topLeftP=new LatLonAlt(32.10574, 35.20228, 0);
+	private final LatLonAlt topLeftP=new LatLonAlt(32.10574, 35.20228, 0);
 	private ArrayList<Packman>packCollection;
 	private ArrayList<Ghost>ghostCollection;
 	private ArrayList<Rectangle>ractCollection;

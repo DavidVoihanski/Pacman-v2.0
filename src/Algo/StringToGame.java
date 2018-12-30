@@ -83,7 +83,11 @@ public abstract class StringToGame {
 			// getting the "starting point" of every block
 			int xStartPixel = Range
 					.gps2Pixel(current.getBottomLeft(), givenGuiWidow.getWindowHeight(), givenGuiWidow.getWindowWidth())
+<<<<<<< HEAD
 					.ix() ;
+=======
+					.ix();
+>>>>>>> 7a00624304b7534b818d2614958b3469e3c4729a
 			int yStartPixel = Range
 					.gps2Pixel(current.getTopRight(), givenGuiWidow.getWindowHeight(), givenGuiWidow.getWindowWidth())
 					.iy() + 57;

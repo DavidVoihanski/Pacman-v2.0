@@ -17,6 +17,7 @@ import javax.swing.JMenuItem;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
+import Algo.GameAlgo;
 import Algo.StringToGame;
 import Coords.LatLonAlt;
 import Geom.Point3D;

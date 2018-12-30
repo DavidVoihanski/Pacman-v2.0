@@ -90,6 +90,7 @@ class MenuAction implements ActionListener {
 		if(play1.isRuning()) {
 			double angToMove;
 			Positionts currentPos = StringToGame.toGame(this.play1.getBoard());
+			GameAlgo.removeInvalidPointsFromRects(currentPos);
 			Fruit closest=GameAlgo.findClosestFruit(currentPos.getFruitCollection(), currentPos.getPlayer());
 			double distance=closest.getLocation().distance2D(currentPos.getPlayer().getPosition())*100000;
 			System.out.println(distance);

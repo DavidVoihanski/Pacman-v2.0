@@ -3,10 +3,12 @@ package Algo;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import Coords.LatLonAlt;
 import Robot.Fruit;
 import Utils.MyPlayer;
 import Utils.Positionts;
 import Utils.Range;
+import Utils.Rectangle;
 
 public abstract class GameAlgo {
 
@@ -29,5 +31,35 @@ public abstract class GameAlgo {
 			}
 		}
 		return closest;
+	}
+	public static boolean isValidPointOnMap(Positionts pos,LatLonAlt gps) {
+		ArrayList<Rectangle>rects=pos.getRactCollection();
+		Iterator<Rectangle>it=rects.iterator();
+		while(it.hasNext()) {
+			Rectangle currRect=it.next();
+			double minLat=currRect.getBottomLeft().x();
+			double maxLat=currRect.getTopLeft().x();
+			double minLon=currRect.getBottomLeft().y();
+			double maxLon=currRect.getBottomRight().y();
+			double lat=gps.x();
+			double lon=gps.y();
+			if(lat>=minLat&&lat<=maxLat&&lon>=minLon&&lon<=maxLon)
+				return false;
+		}
+		return true;
+	}
+	public static void removeInvalidPointsFromRects(Positionts pos) {
+		ArrayList<Rectangle>rects=pos.getRactCollection();
+		Iterator<Rectangle>rectIt=rects.iterator();
+		while(rectIt.hasNext()) {
+			Rectangle currRect=rectIt.next();
+			ArrayList<LatLonAlt>points=currRect.getAcceciblePoints();
+			Iterator<LatLonAlt>pointsIt=points.iterator();
+			while(pointsIt.hasNext()) {
+				LatLonAlt currPoint=pointsIt.next();
+				if(!isValidPointOnMap(pos, currPoint))
+					points.remove(currPoint);
+			}
+		}
 	}
 }

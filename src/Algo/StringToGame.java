@@ -70,7 +70,7 @@ public abstract class StringToGame {
 		if (p != null) {
 			Point3D pixelCoords = Range.gps2Pixel(p.getPosition(), givenGuiWidow.getWindowHeight(),
 					givenGuiWidow.getWindowWidth());
-			givenGuiWidow.getImagePanel().drawMPlayer(pixelCoords.ix() + 10, pixelCoords.iy() + 57,
+			givenGuiWidow.getImagePanel().drawMPlayer(pixelCoords.ix() , pixelCoords.iy() + 57,
 					givenGuiWidow.getGraphics());
 		}
 	}
@@ -83,7 +83,7 @@ public abstract class StringToGame {
 			// getting the "starting point" of every block
 			int xStartPixel = Range
 					.gps2Pixel(current.getBottomLeft(), givenGuiWidow.getWindowHeight(), givenGuiWidow.getWindowWidth())
-					.ix() + 10;
+					.ix();
 			int yStartPixel = Range
 					.gps2Pixel(current.getTopRight(), givenGuiWidow.getWindowHeight(), givenGuiWidow.getWindowWidth())
 					.iy() + 57;
@@ -102,7 +102,7 @@ public abstract class StringToGame {
 			Packman current = itPac.next();
 			Point3D pixelCoords = Range.gps2Pixel(current.getLocation(), givenGuiWidow.getWindowHeight(),
 					givenGuiWidow.getWindowWidth());
-			givenGuiWidow.getImagePanel().drawPackman(pixelCoords.ix() + 10, pixelCoords.iy() + 57,
+			givenGuiWidow.getImagePanel().drawPackman(pixelCoords.ix() , pixelCoords.iy() + 57,
 					givenGuiWidow.getGraphics());
 		}
 	}
@@ -113,7 +113,7 @@ public abstract class StringToGame {
 			Fruit current = itFruit.next();
 			Point3D pixelCoords = Range.gps2Pixel(current.getLocation(), givenGuiWidow.getWindowHeight(),
 					givenGuiWidow.getWindowWidth());
-			givenGuiWidow.getImagePanel().drawFruit(pixelCoords.ix() + 10, pixelCoords.iy() + 57,
+			givenGuiWidow.getImagePanel().drawFruit(pixelCoords.ix() , pixelCoords.iy() + 57,
 					givenGuiWidow.getGraphics());
 		}
 	}
@@ -124,7 +124,7 @@ public abstract class StringToGame {
 			Ghost current = itGhost.next();
 			Point3D pixelCoords = Range.gps2Pixel(current.getPosition(), givenGuiWidow.getWindowHeight(),
 					givenGuiWidow.getWindowWidth());
-			givenGuiWidow.getImagePanel().drawGhost(pixelCoords.ix() + 10, pixelCoords.iy() + 57,
+			givenGuiWidow.getImagePanel().drawGhost(pixelCoords.ix() , pixelCoords.iy() + 57,
 					givenGuiWidow.getGraphics());
 		}
 	}

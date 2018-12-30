@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
+import javax.swing.JMenuBar;
 
 import Algo.GameAlgo;
 import Algo.StringToGame;
@@ -60,7 +61,6 @@ class MenuAction implements ActionListener {
 			}
 			this.play1.setIDs(firstID, secID);
 			Positionts pos = StringToGame.toGame(play1.getBoard());
-			this.gw = new GuiWorker(pos, this.guiInstance, this.guiInstance.getImagePanel());
 			guiInstance.setGame(pos);
 			StringToGame.drawGame(pos, guiInstance);
 			// ******************************************//
@@ -87,24 +87,27 @@ class MenuAction implements ActionListener {
 	}
 
 	public void moveMyPlayer(Point3D lastPixelClicked) {
-		if(play1.isRuning()) {
+		if (play1.isRuning()) {
 			double angToMove;
 			Positionts currentPos = StringToGame.toGame(this.play1.getBoard());
-			Fruit closest=GameAlgo.findClosestFruit(currentPos.getFruitCollection(), currentPos.getPlayer());
-			double distance=closest.getLocation().distance2D(currentPos.getPlayer().getPosition())*100000;
-			System.out.println(distance);
-			if(distance>8) {
+			GameAlgo.removeInvalidPointsFromRects(currentPos);
+			Fruit closest = GameAlgo.findClosestFruit(currentPos.getFruitCollection(), currentPos.getPlayer());
+			double distance = closest.getLocation().distance2D(currentPos.getPlayer().getPosition()) * 100000;
+			if (distance > 8) {
 				angToMove = getAngForMovement(lastPixelClicked, currentPos.getPlayer().getPosition());
 				this.play1.rotate(angToMove);
-			}
-			else {
-				angToMove=GameAlgo.pathToColsestFruit(currentPos.getPlayer(),closest);
+			} else {
+				angToMove = GameAlgo.pathToColsestFruit(currentPos.getPlayer(), closest);
 				this.play1.rotate(angToMove);
 			}
-			this.guiInstance.paint(this.guiInstance.getGraphics());
+			this.guiInstance.getMapImage().paintComponent((this.guiInstance.getGraphics()));
 			StringToGame.drawGame(currentPos, this.guiInstance);
 			System.out.println(play1.getStatistics());
 		}
+	}
+
+	public boolean isGameRunning() {
+		return this.play1.isRuning();
 	}
 
 	private double getAngForMovement(Point3D lastPixelClicked, LatLonAlt currentLoc) {

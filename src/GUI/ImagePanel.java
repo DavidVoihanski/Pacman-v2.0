@@ -20,13 +20,13 @@ import javax.swing.JLabel;
 public class ImagePanel extends JLabel {
 
 	private static final long serialVersionUID = 1L;
-	private BufferedImage changingImage;
-	private BufferedImage originalImage;
+//	private BufferedImage changingImage;
+//	private BufferedImage originalImage;
 	private BufferedImage packman;
 	private BufferedImage fruit;
 	private BufferedImage ghost;
 	private BufferedImage myPlayer;
-	private final static String PathToMapImage = "images/Ariel1.png";
+//	private final static String PathToMapImage = "images/Ariel1.png";
 	private final static String PathToPackImage = "images/pacman.png";
 	private final static String PathToFruitImage = "images/fruit.png";
 	private final static String PathToGhostImage = "images/ghost.png";
@@ -39,18 +39,18 @@ public class ImagePanel extends JLabel {
 	 * @param image games image
 	 */
 	ImagePanel() {
-		try {
-			this.originalImage = ImageIO.read(new File(PathToMapImage));
-		} catch (IOException e1) {
-			System.out.println("ERR=>reading map image");
-			e1.printStackTrace();
-		}
-		try {
-			this.changingImage = ImageIO.read(new File(PathToMapImage));
-		} catch (IOException e1) {
-			System.out.println("ERR=>reading map image");
-			e1.printStackTrace();
-		}
+//		try {
+//			this.originalImage = ImageIO.read(new File(PathToMapImage));
+//		} catch (IOException e1) {
+//			System.out.println("ERR=>reading map image");
+//			e1.printStackTrace();
+//		}
+//		try {
+//			this.changingImage = ImageIO.read(new File(PathToMapImage));
+//		} catch (IOException e1) {
+//			System.out.println("ERR=>reading map image");
+//			e1.printStackTrace();
+//		}
 		try {
 			this.packman = ImageIO.read(new File(PathToPackImage));
 		} catch (IOException e) {
@@ -84,19 +84,19 @@ public class ImagePanel extends JLabel {
 	/****** public methods *********/
 
 //these two are for internal uses
-	@Override
-	public Dimension getPreferredSize() {
-		if (super.isPreferredSizeSet()) {
-			return super.getPreferredSize();
-		}
-		return new Dimension(changingImage.getWidth(), changingImage.getHeight());
-	}
+//	@Override
+//	public Dimension getPreferredSize() {
+//		if (super.isPreferredSizeSet()) {
+//			return super.getPreferredSize();
+//		}
+//		return new Dimension(changingImage.getWidth(), changingImage.getHeight());
+//	}
 
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.drawImage(changingImage, 0, 0, null);
-	}
+//	@Override
+//	protected void paintComponent(Graphics g) {
+//		super.paintComponent(g);
+//		g.drawImage(changingImage, 0, 0, null);
+//	}
 
 	/**
 	 * used to draw the pacman icon on the screen
@@ -137,17 +137,17 @@ public class ImagePanel extends JLabel {
 	 * @param width  wanted images width
 	 * @param height wanted images height
 	 */
-	public void resizeImage(int width, int height) {
-		int imageWidth = this.originalImage.getWidth();
-		int imageHeight = this.originalImage.getHeight();
-		double scaleX = (double) width / imageWidth;// calculating the X ratio
-		double scaleY = (double) height / imageHeight;// calculating the Y ratio
-		// using "Affine Transform" to scale the image based on the ratio
-		AffineTransform scaleTransform = AffineTransform.getScaleInstance(scaleX, scaleY);
-		AffineTransformOp bilinearScaleOp = new AffineTransformOp(scaleTransform, AffineTransformOp.TYPE_BILINEAR);
-		this.changingImage = bilinearScaleOp.filter(this.originalImage,
-				new BufferedImage(width, height, this.originalImage.getType()));
-	}
+//	public void resizeImage(int width, int height) {
+//		int imageWidth = this.originalImage.getWidth();
+//		int imageHeight = this.originalImage.getHeight();
+//		double scaleX = (double) width / imageWidth;// calculating the X ratio
+//		double scaleY = (double) height / imageHeight;// calculating the Y ratio
+//		// using "Affine Transform" to scale the image based on the ratio
+//		AffineTransform scaleTransform = AffineTransform.getScaleInstance(scaleX, scaleY);
+//		AffineTransformOp bilinearScaleOp = new AffineTransformOp(scaleTransform, AffineTransformOp.TYPE_BILINEAR);
+//		this.changingImage = bilinearScaleOp.filter(this.originalImage,
+//				new BufferedImage(width, height, this.originalImage.getType()));
+//	}
 
 	/****** private methods *********/
 

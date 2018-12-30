@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -23,6 +24,7 @@ import Utils.GpsCoord;
 import Utils.MyPlayer;
 import Utils.Positionts;
 import Utils.Range;
+import Algo.GameAlgo;
 
 public class MyFrame_2 extends JFrame implements MouseListener, ComponentListener, MenuListener, ActionListener {
 
@@ -31,6 +33,7 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 	private JMenuItem loadGame;
 	private JMenuItem playGame;
 	private ImagePanel images;
+	private ImagePanelOfMap mapImage;
 	private Positionts game;
 	private MenuAction menu;
 	private MyPlayer p1;
@@ -41,6 +44,14 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 		initComp();
 		this.addMouseListener(this);
 		this.addComponentListener(this);
+	}
+
+	public ImagePanel getImage() {
+		return this.images;
+	}
+
+	public ImagePanelOfMap getMapImage() {
+		return this.mapImage;
 	}
 
 	public double getWindowWidth() {
@@ -79,6 +90,10 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 	public void setIsPlaying(boolean arg) {
 		this.isPlaying = arg;
 	}
+	
+	public boolean isPlaying() {
+		return this.isPlaying;
+	}
 
 	public MyPlayer getMPlayer() {
 		return this.p1;
@@ -111,7 +126,7 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 	@Override
 	public void componentResized(ComponentEvent e) {
 		// resize the actual image
-		this.images.resizeImage(this.getWidth() - 15, this.getHeight() - 60);
+		this.mapImage.resizeImage(this.getWidth() - 15, this.getHeight() - 60);
 		// make the thread "go to sleep" to avoid smearing the screen
 		try {
 			Thread.sleep(20);
@@ -156,7 +171,7 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 			this.images.drawMPlayer(pixelClicked.ix(), pixelClicked.iy(), this.getGraphics());
 			this.menu.setIsLoaded(false);
 			this.isPlaying = true;
-		} else if (this.isPlaying && this.isMyPlayerSet() && this.isSetToPlay) {
+		} else if (this.isPlaying && this.isMyPlayerSet() && this.isSetToPlay && this.menu.isGameRunning()) {
 			Point3D pixelClicked = new Point3D(e.getX(), e.getY());
 			this.menu.moveMyPlayer(pixelClicked);
 		}
@@ -199,7 +214,10 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.images = new ImagePanel();
-		this.add(this.images);
+		this.mapImage = new ImagePanelOfMap(this.getJMenuBar(),this);
+		this.add(mapImage);
+		this.add(images);
+		this.setContentPane(mapImage);
 		this.pack();
 		this.setVisible(true);
 	}
@@ -228,4 +246,6 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 			StringToGame.drawGame(this.game, this);
 		}
 	}
+
+
 }

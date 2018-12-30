@@ -91,16 +91,18 @@ class MenuAction implements ActionListener {
 			double angToMove;
 			Positionts currentPos = StringToGame.toGame(this.play1.getBoard());
 			GameAlgo.removeInvalidPointsFromRects(currentPos);
-<<<<<<< HEAD
-			Fruit closest = GameAlgo.findClosestFruit(currentPos.getFruitCollection(), currentPos.getPlayer());
-			double distance = closest.getLocation().distance2D(currentPos.getPlayer().getPosition()) * 100000;
-			if (distance > 8) {
-=======
+			try {
+				LatLonAlt temp=Range.pixel2Gps(lastPixelClicked, this.guiInstance.getWindowHeight(),
+						this.guiInstance.getWindowWidth());
+				System.out.println(GameAlgo.isValidPointOnMap(currentPos, temp));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			Fruit closest=GameAlgo.findClosestFruit(currentPos.getFruitCollection(), currentPos.getPlayer());
 			double distance=closest.getLocation().distance2D(currentPos.getPlayer().getPosition())*100000;
 			System.out.println(distance);
 			if(distance>8) {
->>>>>>> 7a00624304b7534b818d2614958b3469e3c4729a
 				angToMove = getAngForMovement(lastPixelClicked, currentPos.getPlayer().getPosition());
 				this.play1.rotate(angToMove);
 			} else {
@@ -109,6 +111,7 @@ class MenuAction implements ActionListener {
 			}
 			this.guiInstance.getMapImage().paintComponent((this.guiInstance.getGraphics()));
 			StringToGame.drawGame(currentPos, this.guiInstance);
+			this.guiInstance.setGame(currentPos);
 			System.out.println(play1.getStatistics());
 		}
 	}

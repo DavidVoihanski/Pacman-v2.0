@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import Coords.LatLonAlt;
-import Robot.Fruit;
+import Utils.Fruit;
 import Utils.Ghost;
 import Utils.MyCoords;
 import Utils.MyPlayer;
 import Utils.Positionts;
 import Utils.Range;
 import Utils.Rectangle;
+import Utils.Solution;
 import graph.Graph;
 import graph.Graph_Algo;
 import graph.Node;
@@ -104,7 +105,7 @@ public abstract class GameAlgo {
 	
 
 	
-	public static ArrayList<LatLonAlt> runGame(Positionts pos) {
+	public static Solution runGame(Positionts pos) {
 		return findNextBestFruit(pos);
 	}
 	
@@ -129,7 +130,7 @@ public abstract class GameAlgo {
 		return pathInCoords;
 	}
 	
-	private static ArrayList<LatLonAlt> findNextBestFruit(Positionts pos) {
+	private static Solution findNextBestFruit(Positionts pos) {
 		
 		ArrayList<LatLonAlt>allPoints=new ArrayList<>(); //will hold every point of interest on the map(corners and fruits)
 		String source = "player";
@@ -157,7 +158,9 @@ public abstract class GameAlgo {
 		System.out.println("");
 		Node targetNode=graph.getNodeByIndex(indexOfTarget);
 		ArrayList<LatLonAlt>path=parsePath(targetNode,allPoints, graph);
-		return path;
+		int id=pos.getFruitCollection().get(indexOfTarget-startOfFruits).getId();
+		Solution solution_ = new Solution(path, id);
+		return solution_;
 	}
 	
 	

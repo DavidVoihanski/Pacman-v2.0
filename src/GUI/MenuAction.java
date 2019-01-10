@@ -15,14 +15,15 @@ import Algo.GameAlgo;
 import Algo.StringToGame;
 import Coords.LatLonAlt;
 import Geom.Point3D;
-import Robot.Fruit;
 import Robot.Play;
+import Utils.Fruit;
 import Utils.Ghost;
 import Utils.GpsCoord;
 import Utils.MyCoords;
 import Utils.MyPlayer;
 import Utils.Positionts;
 import Utils.Range;
+import Utils.Solution;
 
 /**
  * this class was created to deal with "menu action" , i.e pressing the menu
@@ -116,15 +117,19 @@ class MenuAction implements ActionListener {
 	private void autoRun() {
 		while(this.play1.isRuning()) {
 			double angToMove;
+			boolean loopFlag=true;
 			MyCoords converter=new MyCoords();
 			Positionts currentPos = StringToGame.toGame(this.play1.getBoard());
 			MyPlayer player = currentPos.getPlayer();
 			GameAlgo.removeInvalidPointsFromRects(currentPos);
-			ArrayList<LatLonAlt>path=GameAlgo.runGame(currentPos);
+			Solution sol=GameAlgo.runGame(currentPos);
+			ArrayList<LatLonAlt>path=sol.getPath();
+			int idOfFruit=sol.getIdOfTargetFruit();
 			Iterator<LatLonAlt>it=path.iterator();
-			while(it.hasNext()) {
+			while(it.hasNext()&&loopFlag) {
 				LatLonAlt currTarger=it.next();
-				while(converter.distance2d(player.getPosition(), currTarger)>1&&play1.isRuning()) {
+				while(converter.distance2d(player.getPosition(), currTarger)>1&&play1.isRuning()&&loopFlag) {
+					loopFlag=isFruitAlive(idOfFruit, currentPos);
 					angToMove=Range.GetAzi(player.getPosition(), currTarger);
 					this.play1.rotate(angToMove);
 					currentPos = StringToGame.toGame(this.play1.getBoard());
@@ -133,6 +138,7 @@ class MenuAction implements ActionListener {
 					StringToGame.drawGame(currentPos, this.guiInstance);
 					this.guiInstance.setGame(currentPos);
 					System.out.println(play1.getStatistics());
+					
 				}
 			}
 		}
@@ -151,5 +157,14 @@ class MenuAction implements ActionListener {
 			e.printStackTrace();
 		}
 		return (Range.GetAzi(currentLoc, convertedPixel));
+	}
+	private boolean isFruitAlive(int id,Positionts pos) {
+		ArrayList<Fruit>fruits=pos.getFruitCollection();
+		Iterator<Fruit>it=fruits.iterator();
+		while(it.hasNext()) {
+			Fruit currFruit = it.next();
+			if(id==currFruit.getId())return true;
+		}
+		return false;
 	}
 }

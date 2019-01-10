@@ -3,7 +3,6 @@ package Utils;
 import java.util.ArrayList;
 
 import Coords.LatLonAlt;
-import Robot.Fruit;
 import Robot.Packman;
 
 public class Positionts {

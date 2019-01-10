@@ -6,8 +6,8 @@ import java.util.Iterator;
 import Coords.LatLonAlt;
 import GUI.MyFrame_2;
 import Geom.Point3D;
-import Robot.Fruit;
 import Robot.Packman;
+import Utils.Fruit;
 import Utils.Ghost;
 import Utils.MyPlayer;
 import Utils.Positionts;
@@ -28,10 +28,7 @@ public abstract class StringToGame {
 				MyPlayer newPlayer = new MyPlayer(location);
 				pos.setPlayer(newPlayer);
 			} else if (lineToArr[0].equals("F")) {
-				double lat = Double.parseDouble(lineToArr[2]);
-				double lon = Double.parseDouble(lineToArr[3]);
-				LatLonAlt location = new LatLonAlt(lat, lon, 0);
-				Fruit newFruit = new Fruit(location);
+				Fruit newFruit = new Fruit(lineToArr[2]+","+lineToArr[3]+","+lineToArr[1]);
 				pos.addFruit(newFruit);
 			} else if (lineToArr[0].equals("P")) {
 				double lat = Double.parseDouble(lineToArr[2]);

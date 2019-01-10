@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenuBar;
@@ -16,6 +17,7 @@ import Coords.LatLonAlt;
 import Geom.Point3D;
 import Robot.Fruit;
 import Robot.Play;
+import Utils.Ghost;
 import Utils.GpsCoord;
 import Utils.MyCoords;
 import Utils.MyPlayer;
@@ -36,7 +38,6 @@ class MenuAction implements ActionListener {
 	private Play play1;
 	private long firstID = 313962193L;
 	private long secID = 315873455L;
-	private GuiWorker gw;
 
 	/**
 	 * basic constructor - only gets the GUI instance it was called from
@@ -71,6 +72,10 @@ class MenuAction implements ActionListener {
 			}
 			// ******************************************//
 		}
+		else if(e.getActionCommand().equals("Run Algorithm")) {
+			this.play1.start();
+			this.autoRun();
+		}
 	}
 
 	public void setMyPlayerLoc(LatLonAlt arg) {
@@ -87,18 +92,11 @@ class MenuAction implements ActionListener {
 	}
 
 	public void moveMyPlayer(Point3D lastPixelClicked) {
+		System.out.println(play1.isRuning());
 		if (play1.isRuning()) {
 			double angToMove;
 			Positionts currentPos = StringToGame.toGame(this.play1.getBoard());
 			GameAlgo.removeInvalidPointsFromRects(currentPos);
-			try {
-				LatLonAlt temp=Range.pixel2Gps(lastPixelClicked, this.guiInstance.getWindowHeight(),
-						this.guiInstance.getWindowWidth());
-				System.out.println(GameAlgo.isValidPointOnMap(currentPos, temp));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			Fruit closest=GameAlgo.findClosestFruit(currentPos.getFruitCollection(), currentPos.getPlayer());
 			double distance=closest.getLocation().distance2D(currentPos.getPlayer().getPosition())*100000;
 			System.out.println(distance);
@@ -115,7 +113,30 @@ class MenuAction implements ActionListener {
 			System.out.println(play1.getStatistics());
 		}
 	}
-
+	private void autoRun() {
+		while(this.play1.isRuning()) {
+			double angToMove;
+			MyCoords converter=new MyCoords();
+			Positionts currentPos = StringToGame.toGame(this.play1.getBoard());
+			MyPlayer player = currentPos.getPlayer();
+			GameAlgo.removeInvalidPointsFromRects(currentPos);
+			ArrayList<LatLonAlt>path=GameAlgo.runGame(currentPos);
+			Iterator<LatLonAlt>it=path.iterator();
+			while(it.hasNext()) {
+				LatLonAlt currTarger=it.next();
+				while(converter.distance2d(player.getPosition(), currTarger)>1&&play1.isRuning()) {
+					angToMove=Range.GetAzi(player.getPosition(), currTarger);
+					this.play1.rotate(angToMove);
+					currentPos = StringToGame.toGame(this.play1.getBoard());
+					player=currentPos.getPlayer();
+					this.guiInstance.getMapImage().paintComponent((this.guiInstance.getGraphics()));
+					StringToGame.drawGame(currentPos, this.guiInstance);
+					this.guiInstance.setGame(currentPos);
+					System.out.println(play1.getStatistics());
+				}
+			}
+		}
+	}
 	public boolean isGameRunning() {
 		return this.play1.isRuning();
 	}

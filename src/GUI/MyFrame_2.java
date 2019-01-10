@@ -33,6 +33,7 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 	private JMenu mainMenu;
 	private JMenuItem loadGame;
 	private JMenuItem playGame;
+	private JMenuItem runAlgo;
 	private ImagePanel images;
 	private ImagePanelOfMap mapImage;
 	private Positionts game;
@@ -236,8 +237,12 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 		this.playGame = new JMenuItem("start playing");
 		this.playGame.setMnemonic(KeyEvent.VK_R);
 		playGame.addActionListener(this.menu);
+		this.runAlgo=new JMenuItem("Run Algorithm");
+		this.runAlgo.setMnemonic(KeyEvent.VK_R);
+		this.runAlgo.addActionListener(this.menu);
 		this.mainMenu.add(loadGame);
 		this.mainMenu.add(playGame);
+		this.mainMenu.add(runAlgo);
 		menuBar.add(mainMenu);
 		this.setJMenuBar(menuBar);
 	}

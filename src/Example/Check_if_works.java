@@ -78,5 +78,6 @@ public class Check_if_works {
 		System.out.println(info);
 //		Positionts pos = StringToGame.toGame(play1.getBoard());
 //		Point3D p = Range.gps2Pixel(pos.getFruitCollection().get(0).getLocation(), 642, 1433);
+	    
 	}
 }

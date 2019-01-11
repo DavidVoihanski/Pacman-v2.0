@@ -15,6 +15,7 @@ import Algo.GameAlgo;
 import Algo.StringToGame;
 import Coords.LatLonAlt;
 import Geom.Point3D;
+import MySql.Statistics;
 import Robot.Play;
 import Utils.Fruit;
 import Utils.Ghost;
@@ -39,6 +40,7 @@ class MenuAction implements ActionListener {
 	private Play play1;
 	private long firstID = 313962193L;
 	private long secID = 315873455L;
+	private int mapId;
 
 	/**
 	 * basic constructor - only gets the GUI instance it was called from
@@ -60,6 +62,7 @@ class MenuAction implements ActionListener {
 				File selectedFile = fc.getSelectedFile();
 				this.guiInstance.clear();
 				this.play1 = new Play(selectedFile.toString());
+				mapId = play1.getHash1();
 			}
 			this.play1.setIDs(firstID, secID);
 			Positionts pos = StringToGame.toGame(play1.getBoard());
@@ -91,7 +94,10 @@ class MenuAction implements ActionListener {
 	public void setIsLoaded(boolean arg) {
 		this.isTryingToPutMyP = arg;
 	}
-
+	/**
+	 * The main function to play the game by yourself, each click will move the player toward the point clicked
+	 * @param lastPixelClicked
+	 */
 	public void moveMyPlayer(Point3D lastPixelClicked) {
 		System.out.println(play1.isRuning());
 		if (play1.isRuning()) {
@@ -114,6 +120,7 @@ class MenuAction implements ActionListener {
 			System.out.println(play1.getStatistics());
 		}
 	}
+	//calls the algorithm from GameAlgo to play the game automatically
 	private void autoRun() {
 		while(this.play1.isRuning()) {
 			double angToMove;
@@ -142,11 +149,18 @@ class MenuAction implements ActionListener {
 				}
 			}
 		}
+		String currStats=play1.getStatistics();
+
+		double myScore = parseScore(currStats);
+		double myPlace = Statistics.compareScore(mapId, myScore);
+		System.out.println(myPlace + "% of top");
+		
 	}
 	public boolean isGameRunning() {
 		return this.play1.isRuning();
 	}
-
+	
+	//returns angle to move the player to
 	private double getAngForMovement(Point3D lastPixelClicked, LatLonAlt currentLoc) {
 		LatLonAlt convertedPixel = null;
 		try {
@@ -158,6 +172,7 @@ class MenuAction implements ActionListener {
 		}
 		return (Range.GetAzi(currentLoc, convertedPixel));
 	}
+	//checks if current fruit target is alive
 	private boolean isFruitAlive(int id,Positionts pos) {
 		ArrayList<Fruit>fruits=pos.getFruitCollection();
 		Iterator<Fruit>it=fruits.iterator();
@@ -166,5 +181,12 @@ class MenuAction implements ActionListener {
 			if(id==currFruit.getId())return true;
 		}
 		return false;
+	}
+	//parses score from getStats line
+	private double parseScore(String stats) {
+		String statsToArr[] = stats.split(",");
+		String scoreArr[] = statsToArr[2].split(":");
+		double score = Double.parseDouble(scoreArr[1]);
+		return score;
 	}
 }

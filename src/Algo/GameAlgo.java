@@ -17,12 +17,24 @@ import graph.Graph_Algo;
 import graph.Node;
 
 public abstract class GameAlgo {
-
+	
+	/**
+	 * 
+	 * @param player MyPlayer object
+	 * @param closest Fruit object
+	 * @return returns the angle to move to input fruit
+	 */
 	public static double pathToColsestFruit(MyPlayer player,Fruit closest) {
 		double angle=Range.GetAzi(player.getPosition(), closest.getLocation());
 		return angle;
 	}
-
+	
+	/**
+	 * Find the closes fruit to the player
+	 * @param fruits collection of all fruits on the map
+	 * @param player1 player object 
+	 * @return the closest fruit
+	 */
 	public static Fruit findClosestFruit(ArrayList<Fruit>fruits,MyPlayer player1) {
 		Iterator<Fruit>it=fruits.iterator();
 		if(!it.hasNext())return null;
@@ -38,6 +50,12 @@ public abstract class GameAlgo {
 		}
 		return closest;
 	}
+	/**
+	 * Finds closest ghost to the player
+	 * @param ghosts collection of all ghosts on the map
+	 * @param player1 MyPlayer object
+	 * @return the closest fruit
+	 */
 	public static Ghost findClosestGhost(ArrayList<Ghost>ghosts,MyPlayer player1) {
 		MyCoords converter=new MyCoords();
 		Iterator<Ghost>it=ghosts.iterator();
@@ -54,6 +72,12 @@ public abstract class GameAlgo {
 		}
 		return closest;
 	}
+	/**
+	 * Checks if an input point is a valid point on the map (not inside a black box)
+	 * @param pos positions of all objects on the map
+	 * @param gps point to check
+	 * @return returns true if a valid point and false otherwise
+	 */
 	public static boolean isValidPointOnMap(Positionts pos,LatLonAlt gps) {
 		ArrayList<Rectangle>rects=pos.getRactCollection();
 		Iterator<Rectangle>it=rects.iterator();
@@ -70,6 +94,10 @@ public abstract class GameAlgo {
 		}
 		return true;
 	}
+	/**
+	 * If black boxes overlap, removes the overlapping corners because they are unreachable
+	 * @param pos All positions on the map
+	 */
 	public static void removeInvalidPointsFromRects(Positionts pos) {
 		ArrayList<Rectangle>rects=pos.getRactCollection();
 		Iterator<Rectangle>rectIt=rects.iterator();
@@ -90,6 +118,13 @@ public abstract class GameAlgo {
 		}
 	}
 	
+	/**
+	 * Checks if you can reach a certain point on the map in a straight line (no black box between them)
+	 * @param start Start location
+	 * @param target Target location
+	 * @param pos Every game object position
+	 * @return returns true if can reach and false otherwise
+	 */
 	public static boolean hasLineOfSight(LatLonAlt start,LatLonAlt target,Positionts pos) {
 		ArrayList<Rectangle>rects=pos.getRactCollection();
 		Iterator<Rectangle>it=rects.iterator();
@@ -104,7 +139,13 @@ public abstract class GameAlgo {
 	}
 	
 
-	
+	/**
+	 * Public function to run the game automatically
+	 * The algorithm uses dijkstra's algorithm to find the fasest path to each fruit, 
+	 * then runs to the closest fruit as lost it wasn't eaten by a robot pack 
+	 * @param pos Every game object position on the map
+	 * @return returns Solution type object, holding the target GPS and fruit id
+	 */
 	public static Solution runGame(Positionts pos) {
 		return findNextBestFruit(pos);
 	}
@@ -130,27 +171,26 @@ public abstract class GameAlgo {
 		return pathInCoords;
 	}
 	
+	//
 	private static Solution findNextBestFruit(Positionts pos) {
 		
 		ArrayList<LatLonAlt>allPoints=new ArrayList<>(); //will hold every point of interest on the map(corners and fruits)
 		String source = "player";
 		allPoints.add(pos.getPlayer().getPosition());
 		Graph graph = new Graph();
-		graph.add(new Node(source));
+		graph.add(new Node(source));//add the player to the graph
 		int startOfFruits=addRectPoints(graph, pos, allPoints);//when we're done adding rects, we start adding fruits- important to know when the fruits started
 		addFruits(graph, pos, allPoints);
 		addReachablePoints(graph, allPoints, pos, startOfFruits);
 		Graph_Algo.dijkstra(graph, source);
 		double minDistance;
-		if(startOfFruits<allPoints.size())minDistance=graph.getNodeByIndex(startOfFruits).getDist();
+		if(startOfFruits<allPoints.size())minDistance=graph.getNodeByIndex(startOfFruits).getDist(); //to avoid null exception
 		else return null;
-		String target=graph.getNodeByIndex(startOfFruits).get_name();
 		int indexOfTarget=startOfFruits;
 		for(int i=startOfFruits+1;i<allPoints.size();i++) { //finds the closest fruit
 			double tempDist=graph.getNodeByIndex(i).getDist();
 			if(tempDist<minDistance) {
 				minDistance=tempDist;
-				target=graph.getNodeByIndex(i).get_name();
 				indexOfTarget=i;
 			}
 		}
@@ -158,7 +198,7 @@ public abstract class GameAlgo {
 		System.out.println("");
 		Node targetNode=graph.getNodeByIndex(indexOfTarget);
 		ArrayList<LatLonAlt>path=parsePath(targetNode,allPoints, graph);
-		int id=pos.getFruitCollection().get(indexOfTarget-startOfFruits).getId();
+		int id=pos.getFruitCollection().get(indexOfTarget-startOfFruits).getId(); //extracts the fruit's id
 		Solution solution_ = new Solution(path, id);
 		return solution_;
 	}
@@ -202,6 +242,8 @@ public abstract class GameAlgo {
 		int counterForOuter=0;
 		String source;
 		String target;
+		//takes every point of interest (black boxes corners and fruits) and find where can to you get
+		//in a straight line 
 		while(pointsIt.hasNext()) {
 			Iterator<LatLonAlt>checker=allPoints.iterator();
 			LatLonAlt currPoint=pointsIt.next();
@@ -219,6 +261,7 @@ public abstract class GameAlgo {
 						target="Fruit"+diff;
 					}
 					else target=""+counterForInner;
+					//0 always represents the player
 					if(counterForInner==0)target="player";
 					if(counterForOuter==0)source="player";
 					graph.addEdge(source, target, converter.distance2d(currPoint, toBeChecked));

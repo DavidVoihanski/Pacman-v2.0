@@ -6,6 +6,11 @@ import Coords.LatLonAlt;
 import Geom.Point3D;
 import Utils.MyCoords;
 
+/**
+ * Class to make GPS calculations
+ * @author David&evegny
+ *
+ */
 public abstract class Range {
 
 	private static final double ratio = 0.6596583225494952;

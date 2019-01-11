@@ -7,10 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import javax.swing.JFileChooser;
-import javax.swing.JMenuBar;
-
 import Algo.GameAlgo;
 import Algo.StringToGame;
 import Coords.LatLonAlt;
@@ -18,8 +15,6 @@ import Geom.Point3D;
 import MySql.Statistics;
 import Robot.Play;
 import Utils.Fruit;
-import Utils.Ghost;
-import Utils.GpsCoord;
 import Utils.MyCoords;
 import Utils.MyPlayer;
 import Utils.Positionts;

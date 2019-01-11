@@ -1,7 +1,11 @@
 package Utils;
 
 import Coords.LatLonAlt;
-
+/**
+ * This class represents a ghost on the map
+ * @author David
+ *
+ */
 public class Ghost {
 	private LatLonAlt position;
 	public Ghost(LatLonAlt pos) {

@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import Coords.LatLonAlt;
 import Robot.Packman;
 
+/**This class holds every game object position on the map
+ * 
+ * @author David
+ *
+ */
 public class Positionts {
 	private final LatLonAlt topLeftP=new LatLonAlt(32.10574, 35.20228, 0);
 	private ArrayList<Packman>packCollection;

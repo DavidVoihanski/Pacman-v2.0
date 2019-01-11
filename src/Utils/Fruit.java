@@ -2,6 +2,11 @@ package Utils;
 
 import Coords.LatLonAlt;
 
+/**
+ * This class represents a fruit in the map
+ * @author David&evegny
+ *
+ */
 public class Fruit {
 	
 	private LatLonAlt location;

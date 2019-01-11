@@ -5,12 +5,17 @@ import java.util.ArrayList;
 import Coords.LatLonAlt;
 import Geom.Point3D;
 
+/**
+ * This class represents a black box on the map
+ * @author David&evegny
+ *
+ */
 public class Rectangle {
 	private LatLonAlt topRight;
 	private LatLonAlt bottomLeft;
 	private LatLonAlt bottomRight;
 	private LatLonAlt topLeft;
-	private ArrayList<LatLonAlt> acceciblePoints;
+	private ArrayList<LatLonAlt> acceciblePoints; //one meter to the side from every corner
 	public Rectangle(String line) {
 		extractGps(line);
 		bottomRight=new LatLonAlt(bottomLeft.x(),topRight.y(),0);
@@ -74,6 +79,7 @@ public class Rectangle {
 		lon = Double.parseDouble(arr[3]);
 		topRight = new LatLonAlt(lat, lon, alt);
 	}
+	//takes every corner of this rect and add a point one meter away in the corner's position
 	private void calcAcceciblePoints() {
 		acceciblePoints=new ArrayList<>();
 		MyCoords converter=new MyCoords();

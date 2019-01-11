@@ -14,7 +14,17 @@ import Utils.Positionts;
 import Utils.Range;
 import Utils.Rectangle;
 
+/**
+ * This class if used to convert strings to game objects (fruits, packmen robots, etc)
+ * @author David&evegny
+ *
+ */
 public abstract class StringToGame {
+	/**
+	 * Takes an arraylist of String representing a game and converts them to packmen, fruits, rectangles, ghosts and your player
+	 * @param data Input arraylist of strings
+	 * @return returns Positions type objects holding all of out packmen fruits etc.
+	 */
 	public static Positionts toGame(ArrayList<String> data) {
 		Iterator<String> it = data.iterator();
 		Positionts pos = new Positionts();
@@ -51,7 +61,12 @@ public abstract class StringToGame {
 		}
 		return pos;
 	}
-
+	
+	/**
+	 * Function to print a game on the GUI
+	 * @param givenGame Every game object's position
+	 * @param givenGuiWidow The GUI window
+	 */
 	public static void drawGame(Positionts givenGame, MyFrame_2 givenGuiWidow) {
 		drawAllBlocks(givenGame, givenGuiWidow);
 		drawAllPackman(givenGame, givenGuiWidow);
@@ -61,6 +76,7 @@ public abstract class StringToGame {
 	}
 
 /////******************PRIVATE********************************
+	//draws the player's position on the GUI
 	private static void drawMyPlayerMovement(Positionts givenGame, MyFrame_2 givenGuiWidow) {
 		MyPlayer p = givenGame.getPlayer();
 		if (p != null) {
@@ -70,7 +86,7 @@ public abstract class StringToGame {
 					givenGuiWidow.getGraphics());
 		}
 	}
-
+	//Draws the black boxes on the GUI
 	private static void drawAllBlocks(Positionts givenGame, MyFrame_2 givenGuiWidow) {
 		Iterator<Rectangle> itRec = givenGame.getRactCollection().iterator();
 		while (itRec.hasNext()) {
@@ -91,7 +107,8 @@ public abstract class StringToGame {
 					currentblockPixelWidthHeight.iy(), givenGuiWidow.getGraphics());
 		}
 	}
-
+	
+	//Draws all the packmen on the GUI
 	private static void drawAllPackman(Positionts givenGame, MyFrame_2 givenGuiWidow) {
 		Iterator<Packman> itPac = givenGame.getPackCollection().iterator();
 		while (itPac.hasNext()) {
@@ -102,7 +119,8 @@ public abstract class StringToGame {
 					givenGuiWidow.getGraphics());
 		}
 	}
-
+	
+	//Draws the fuits on the GUI
 	private static void drawAllFruit(Positionts givenGame, MyFrame_2 givenGuiWidow) {
 		Iterator<Fruit> itFruit = givenGame.getFruitCollection().iterator();
 		while (itFruit.hasNext()) {
@@ -113,7 +131,8 @@ public abstract class StringToGame {
 					givenGuiWidow.getGraphics());
 		}
 	}
-
+	
+	//Draws the ghosts on the GUI
 	private static void drawAllGhosts(Positionts givenGame, MyFrame_2 givenGuiWidow) {
 		Iterator<Ghost> itGhost = givenGame.getGhostCollection().iterator();
 		while (itGhost.hasNext()) {

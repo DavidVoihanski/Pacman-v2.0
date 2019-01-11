@@ -8,6 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * This class is used to compare your score to all other scores in the data base
+ * @author David&Evgeny
+ *
+ */
 public abstract class Statistics {
 
 	/**
@@ -16,13 +21,12 @@ public abstract class Statistics {
 	 * @return Returns your place compared to the DB
 	 */
 	public static double compareScore(int mapId,double myScore) {
-		
 		ArrayList<Double> scores = extractScores(mapId);
 		double myPlace = compareResultToDB(scores, myScore,mapId);
 		return myPlace;
 	}
 
-	//private methods**************
+	//private methods*************************************************************************************
 	//compares your %of top
 	private static double compareResultToDB(ArrayList<Double>scores,double myScore,int mapId) {
 		Iterator<Double>scoreIt=scores.iterator();
@@ -32,10 +36,11 @@ public abstract class Statistics {
 			if(myScore>=currScore) 
 				countLowerScores++;
 		}
-		double percentOfTop = 100.0- (countLowerScores/(double)scores.size()*100);
+		double percentOfTop = 100.0-(countLowerScores/(double)scores.size()*100);
 		return percentOfTop;
 	}
-	//connects to the DB and extracts the score of a certain map
+	
+	//connects to the DB and extracts the scores of a certain map
 	private static ArrayList<Double> extractScores(int mapId) {
 		ArrayList<Double>scores = new ArrayList<Double>();
 		String jdbcUrl="jdbc:mysql://ariel-oop.xyz:3306/oop"; //?useUnicode=yes&characterEncoding=UTF-8&useSSL=false";

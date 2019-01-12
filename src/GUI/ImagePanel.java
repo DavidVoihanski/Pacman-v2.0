@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 /**
  * this class represents the JPanel component we use to hold our image with
  * 
- * @author Evgeny & David
+ * @author Evgeny and David
  *
  */
 public class ImagePanel extends JLabel {

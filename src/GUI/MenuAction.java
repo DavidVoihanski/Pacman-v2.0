@@ -76,10 +76,20 @@ class MenuAction implements ActionListener {
 			this.autoRun();
 		}
 	}
-
-	public void setMyPlayerLoc(LatLonAlt arg) {
+	/**
+	 * Tries to set the player at input coord, checks if the point is a valid point or now and sets the player there if valid
+	 * @param arg gps coord
+	 * @return returns true if set successfully and false otherwise
+	 */
+	public boolean setMyPlayerLoc(LatLonAlt arg) {
+		Positionts pos = StringToGame.toGame(play1.getBoard());
+		if(GameAlgo.isValidPointOnMap(pos, arg)) {
 		this.play1.setInitLocation(arg.lat(), arg.lon());
 		this.guiInstance.setIsSetToPlay(true);
+		this.setIsLoaded(false);
+		return true;
+		}
+		return false;
 	}
 
 	public boolean IsAllowedToPutMyP() {
@@ -130,7 +140,7 @@ class MenuAction implements ActionListener {
 			Iterator<LatLonAlt>it=path.iterator();
 			while(it.hasNext()&&loopFlag) {
 				LatLonAlt currTarger=it.next();
-				while(converter.distance2d(player.getPosition(), currTarger)>1&&play1.isRuning()&&loopFlag) {
+				while(converter.distance2d(player.getPosition(), currTarger)>0.9&play1.isRuning()&&loopFlag) {
 					loopFlag=isFruitAlive(idOfFruit, currentPos);
 					angToMove=Range.GetAzi(player.getPosition(), currTarger);
 					this.play1.rotate(angToMove);

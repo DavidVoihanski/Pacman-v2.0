@@ -27,6 +27,11 @@ import Utils.Positionts;
 import Utils.Range;
 import Algo.GameAlgo;
 
+/**
+ * The main class for the gui, holding all of the component needed for displaying the game
+ * @author David and evgeny
+ *
+ */
 public class MyFrame_2 extends JFrame implements MouseListener, ComponentListener, MenuListener, ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -169,9 +174,9 @@ public class MyFrame_2 extends JFrame implements MouseListener, ComponentListene
 				e1.printStackTrace();
 			}
 			this.p1 = new MyPlayer(startingLocation);
-			this.menu.setMyPlayerLoc(startingLocation);
-			this.images.drawMPlayer(pixelClicked.ix(), pixelClicked.iy(), this.getGraphics());
-			this.menu.setIsLoaded(false);
+			boolean flag = this.menu.setMyPlayerLoc(startingLocation);
+			if(flag)this.images.drawMPlayer(pixelClicked.ix(), pixelClicked.iy(), this.getGraphics());
+			//this.menu.setIsLoaded(false);
 			this.isPlaying = true;
 		} else if (this.isPlaying && this.isMyPlayerSet() && this.isSetToPlay && this.menu.isGameRunning()) {
 			Point3D pixelClicked = new Point3D(e.getX(), e.getY());
